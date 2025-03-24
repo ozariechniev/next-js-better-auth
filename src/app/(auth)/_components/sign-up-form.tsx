@@ -4,12 +4,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, Loader2, Mail } from 'lucide-react';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { authClient } from '@/lib/auth-client';
 import { signUpSchema } from '@/lib/definitions';
 import { SIGN_UP_LABEL } from '../_constants';
 
@@ -27,9 +29,30 @@ export function SignUpForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-    setSubmitting(true);
-    console.log(data);
+  const onSubmit = async (formData: z.infer<typeof signUpSchema>) => {
+    await authClient.signUp.email(
+      {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        callbackURL: '/dashboard',
+      },
+      {
+        onResponse: () => {
+          setSubmitting(false);
+        },
+        onRequest: () => {
+          setSubmitting(true);
+        },
+        onSuccess: async () => {
+          form.reset();
+          setSubmitted(true);
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message ?? 'Internal server error. Please, try again later.');
+        },
+      }
+    );
   };
 
   if (submitted) {
