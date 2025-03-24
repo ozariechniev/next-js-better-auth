@@ -119,3 +119,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .dot-background {
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 16px 16px;
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+}
