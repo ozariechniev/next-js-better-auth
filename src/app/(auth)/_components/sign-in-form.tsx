@@ -3,18 +3,22 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { authClient } from '@/lib/auth-client';
 import { signInSchema } from '@/lib/definitions';
 import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, SIGN_IN_LABEL } from '../_constants';
 
 export function SignInForm() {
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -26,9 +30,33 @@ export function SignInForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    setSubmitting(true);
-    console.log(data);
+  const onSubmit = async (formData: z.infer<typeof signInSchema>) => {
+    await authClient.signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+        callbackURL: '/dashboard',
+      },
+      {
+        onResponse: () => {
+          setSubmitting(false);
+        },
+        onRequest: () => {
+          setSubmitting(true);
+        },
+        onSuccess: async () => {
+          router.push('/dashboard');
+        },
+        onError: (ctx) => {
+          if (ctx.error.status === 403) {
+            toast.error('Please verify your email address');
+          } else {
+            toast.error(ctx.error.message ?? 'An error occurred, please try again.');
+          }
+        },
+      }
+    );
   };
 
   return (
