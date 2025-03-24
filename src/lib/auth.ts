@@ -4,6 +4,7 @@ import { nextCookies } from 'better-auth/next-js';
 import { admin, openAPI } from 'better-auth/plugins';
 import { db } from '@/db/drizzle';
 import { schema } from '@/db/schema';
+import { sendEmail } from './send-email';
 
 export const auth = betterAuth({
   appName: 'NEXT.JS Better Auth',
@@ -11,5 +12,28 @@ export const auth = betterAuth({
     provider: 'pg',
     schema,
   }),
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true,
+    async sendResetPassword({ user, url }) {
+      await sendEmail({
+        to: user.email,
+        subject: 'Reset your password',
+        html: `<a href="${url}">Reset your password</a>`,
+      });
+    },
+  },
+  emailVerification: {
+    autoSignInAfterVerification: true,
+    expiresIn: 3600,
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmail({
+        to: user.email,
+        subject: 'Verify your email address',
+        html: `<a href="${url}">Verify your email address</a>`,
+      });
+    },
+  },
   plugins: [admin(), openAPI(), nextCookies()],
 });
