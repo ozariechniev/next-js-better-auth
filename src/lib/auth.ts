@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
 import { admin, openAPI } from 'better-auth/plugins';
+import { resetPasswordEmailHTML } from '@/app/(auth)/_components/email/reset-password-email';
 import { signUpEmailHTML } from '@/app/(auth)/_components/email/sign-up-email';
 import { db } from '@/db/drizzle';
 import { schema } from '@/db/schema';
@@ -23,10 +24,12 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     async sendResetPassword({ user, url }) {
+      const emailHTML = await resetPasswordEmailHTML({ url, userEmail: user.email });
+
       await sendEmail({
         to: user.email,
         subject: 'Reset your password',
-        html: `<a href="${url}">Reset your password</a>`,
+        html: emailHTML,
       });
     },
   },
