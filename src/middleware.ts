@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  if (!sessionCookie && protectedRoutes.includes(pathname)) {
+  if (!sessionCookie && protectedRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
