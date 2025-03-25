@@ -49,4 +49,5 @@ export const userDTOSchema = z.object({
   name: z.string(),
   email: z.string(),
   emailVerified: z.boolean(),
+  image: z.string().nullable(),
 });

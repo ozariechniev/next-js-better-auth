@@ -1,12 +1,13 @@
 'use server';
 
+import { cache } from 'react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import { ACCESS_DENIED_URL } from '@/lib/constants';
 import { userDTOSchema } from '@/lib/definitions';
 
-export async function getUser() {
+export const getUser = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -19,6 +20,7 @@ export async function getUser() {
     name: session.user.name,
     email: session.user.email,
     emailVerified: session.user.emailVerified,
+    image: session.user.image,
   });
 
   if (!result.success) {
@@ -27,4 +29,4 @@ export async function getUser() {
   }
 
   return result.data;
-}
+});
