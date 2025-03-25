@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
 import { admin, openAPI } from 'better-auth/plugins';
+import { signUpEmailHTML } from '@/app/(auth)/_components/email/sign-up-email';
 import { db } from '@/db/drizzle';
 import { schema } from '@/db/schema';
 import { sendEmail } from './send-email';
@@ -34,10 +35,12 @@ export const auth = betterAuth({
     expiresIn: 3600,
     sendOnSignUp: true,
     sendVerificationEmail: async ({ user, url }) => {
+      const emailHTML = await signUpEmailHTML({ url });
+
       await sendEmail({
         to: user.email,
         subject: 'Verify your email address',
-        html: `<a href="${url}">Verify your email address</a>`,
+        html: emailHTML,
       });
     },
   },
