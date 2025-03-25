@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, Loader2, Mail } from 'lucide-react';
 import { toast } from 'sonner';
@@ -13,11 +14,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { forgotPasswordSchema } from '@/lib/definitions';
-import { RESET_PASSWORD_LABEL } from '../_constants';
+import { RESET_PASSWORD_LABEL, SIGN_IN_URL } from '../_constants';
 
 export function ForgotPasswordForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -68,8 +70,8 @@ export function ForgotPasswordForm() {
           </Alert>
         </CardContent>
         <CardFooter>
-          <Button className="h-12 w-full" onClick={() => setSubmitted(false)}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to reset password
+          <Button className="h-12 w-full" onClick={() => router.push(SIGN_IN_URL)}>
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Sign in
           </Button>
         </CardFooter>
       </Card>
