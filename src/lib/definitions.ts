@@ -44,3 +44,9 @@ export const resetPasswordSchema = z
     path: ['confirmPassword'],
     message: 'Passwords do not match',
   });
+
+export const userDTOSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  emailVerified: z.boolean(),
+});
