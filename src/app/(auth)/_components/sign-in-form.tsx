@@ -14,8 +14,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, SIGN_IN_LABEL } from '@/lib/constants';
 import { signInSchema } from '@/lib/definitions';
-import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, SIGN_IN_LABEL } from '../_constants';
 
 export function SignInForm() {
   const router = useRouter();

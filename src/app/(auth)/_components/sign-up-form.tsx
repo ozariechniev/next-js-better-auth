@@ -13,8 +13,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { SIGN_IN_URL, SIGN_UP_LABEL } from '@/lib/constants';
 import { signUpSchema } from '@/lib/definitions';
-import { SIGN_IN_URL, SIGN_UP_LABEL } from '../_constants';
 
 export function SignUpForm() {
   const [submitting, setSubmitting] = useState(false);

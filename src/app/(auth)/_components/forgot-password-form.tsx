@@ -13,8 +13,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
 import { forgotPasswordSchema } from '@/lib/definitions';
-import { RESET_PASSWORD_LABEL, SIGN_IN_URL } from '../_constants';
 
 export function ForgotPasswordForm() {
   const [submitting, setSubmitting] = useState(false);

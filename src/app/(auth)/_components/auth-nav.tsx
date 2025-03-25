@@ -1,10 +1,10 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import type { AUTH_NAV_LINKS } from '../_constants';
+import { AUTH_NAV_LINKS } from '@/lib/constants';
 
 type AuthLink = (typeof AUTH_NAV_LINKS)[number];
 

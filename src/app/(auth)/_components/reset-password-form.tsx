@@ -12,8 +12,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { FORGOT_PASSWORD_URL, RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
 import { resetPasswordSchema } from '@/lib/definitions';
-import { FORGOT_PASSWORD_URL, RESET_PASSWORD_LABEL, SIGN_IN_URL } from '../_constants';
 
 export function ResetPasswordForm() {
   const searchParams = useSearchParams();
