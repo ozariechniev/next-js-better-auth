@@ -25,3 +25,22 @@ export const signUpSchema = z
     path: ['confirmPassword'],
     message: 'Passwords do not match',
   });
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long' })
+      .max(128, { message: 'Password must be less than 128 characters' }),
+    confirmPassword: z.string().min(8, { message: 'Confirm password is required' }).max(128, {
+      message: 'Confirm password must be less than 128 characters',
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
+  });
