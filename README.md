@@ -114,8 +114,9 @@ npm run db:push
 npm run dev
 ```
 
-The app will be running at: `https://localhost:3000`
-Mailpit will be running at: `http://localhost:8025/`
+- ✅ The app will be running at: `https://localhost:3000`
+- ✅ Mailpit will be running at: `http://localhost:8025/`
+- ✅ Drizzle Studio will be running at: `https://local.drizzle.studio` [`npm run db:studio`] (optional)
 
 ---
 
@@ -125,7 +126,7 @@ Mailpit will be running at: `http://localhost:8025/`
 
 - Ensure Docker is running
 - Verify PostgreSQL container is up (`docker ps`)
-- Check your `.env.local` `DATABASE_URL` matches the Docker configuration 
+- Check your `.env.local` `DATABASE_URL` matches the Docker configuration
 
 #### Email Not Sending?
 
