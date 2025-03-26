@@ -1,6 +1,6 @@
-# Better Auth Email/Password authentication with Next.js
+## Better Auth Email/Password authentication with Next.js
 
-## Tech Stack
+### Tech Stack
 
 - [Next.js](https://nextjs.org/)
 - [Better Auth](https://www.better-auth.com/)
