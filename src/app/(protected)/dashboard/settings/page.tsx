@@ -1,7 +1,7 @@
-import { getUser } from '@/data/user';
+import { requireUser } from '@/data/user';
 
 export default async function SettingsPage() {
-  await getUser();
+  await requireUser();
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
