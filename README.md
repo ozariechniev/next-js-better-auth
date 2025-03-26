@@ -44,3 +44,8 @@ npm run db:push
 # Start the development server
 npm run dev
 ```
+
+### Tools
+
+- Drizzle Studio `npm run db:studio` - [https://local.drizzle.studio](https://local.drizzle.studio)
+- MailPit - [http://localhost:8025](http://localhost:8025)
