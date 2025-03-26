@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { SIGN_IN_URL } from '@/lib/constants';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { SIGN_IN_LABEL, SIGN_IN_URL } from '@/lib/constants';
 
 export default function AccessDeniedPage() {
   return (
@@ -11,7 +11,6 @@ export default function AccessDeniedPage() {
         <Card className="rounded-sm">
           <CardHeader>
             <CardTitle className="text-2xl">Access Denied</CardTitle>
-            <CardDescription>You don&apos;t have permission to access this page</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">Please sign in with an authorized account to continue.</p>
@@ -20,11 +19,11 @@ export default function AccessDeniedPage() {
             </p>
           </CardContent>
           <CardFooter className="grid grid-cols-2 gap-4">
-            <Button asChild className="w-full">
-              <Link href={SIGN_IN_URL}>Sign In</Link>
+            <Button asChild className="h-12 w-full">
+              <Link href={SIGN_IN_URL}>{SIGN_IN_LABEL}</Link>
             </Button>
-            <Button variant="outline" asChild className="w-full">
-              <Link href="/">Return to Homepage</Link>
+            <Button variant="outline" asChild className="h-12 w-full">
+              <Link href="/">Back to Homepage</Link>
             </Button>
           </CardFooter>
         </Card>
