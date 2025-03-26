@@ -42,8 +42,8 @@ export function ResetPasswordEmail({ url, userEmail }: ResetPasswordEmailProps) 
             <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
 
             <Text className="text-[12px] leading-[24px] text-[#666666]">
-              For security reasons, we don&apos;t store your password. If you didn&apos;t request this change, we
-              recommend securing your account by changing your password immediately after logging in.
+              If you didn&apos;t request this change, we recommend securing your account by changing your password
+              immediately after logging in.
             </Text>
           </Container>
         </Body>
