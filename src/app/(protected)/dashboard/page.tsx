@@ -1,7 +1,7 @@
-import { getUser } from '@/data/user';
+import { requireUser } from '@/data/user';
 
 export default async function DashboardPage() {
-  await getUser();
+  await requireUser();
 
   return (
     <>
