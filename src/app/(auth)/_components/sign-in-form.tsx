@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, SIGN_IN_LABEL } from '@/lib/constants';
+import { DASHBOARD_URL, FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, SIGN_IN_LABEL } from '@/lib/constants';
 import { signInSchema } from '@/lib/definitions';
 
 export function SignInForm() {
@@ -36,7 +36,7 @@ export function SignInForm() {
         email: formData.email,
         password: formData.password,
         rememberMe: formData.rememberMe,
-        callbackURL: '/dashboard',
+        callbackURL: DASHBOARD_URL,
       },
       {
         onResponse: () => {
@@ -46,7 +46,7 @@ export function SignInForm() {
           setSubmitting(true);
         },
         onSuccess: async () => {
-          router.push('/dashboard');
+          router.push(DASHBOARD_URL);
         },
         onError: (ctx) => {
           if (ctx.error.status === 403) {

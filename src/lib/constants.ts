@@ -10,6 +10,9 @@ export const FORGOT_PASSWORD_URL = '/forgot-password';
 export const RESET_PASSWORD_LABEL = 'Reset password';
 export const RESET_PASSWORD_URL = '/reset-password';
 
+export const DASHBOARD_LABEL = 'Dashboard';
+export const DASHBOARD_URL = '/dashboard';
+
 export const ACCESS_DENIED_URL = '/access-denied';
 
 export const AUTH_NAV_LINKS = [
