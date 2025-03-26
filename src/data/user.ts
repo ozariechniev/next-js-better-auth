@@ -4,7 +4,7 @@ import { cache } from 'react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
-import { SIGN_IN_URL } from '@/lib/constants';
+import { ACCESS_DENIED_URL } from '@/lib/constants';
 import { userDTOSchema } from '@/lib/definitions';
 
 export const getUser = cache(async () => {
@@ -13,7 +13,7 @@ export const getUser = cache(async () => {
   });
 
   if (!session?.user) {
-    redirect(SIGN_IN_URL);
+    return null;
   }
 
   const result = userDTOSchema.safeParse({
@@ -21,12 +21,28 @@ export const getUser = cache(async () => {
     email: session.user.email,
     emailVerified: session.user.emailVerified,
     image: session.user.image,
+    role: session.user.role,
   });
 
   if (!result.success) {
-    console.error('User data validation failed:', result.error.flatten());
-    redirect(SIGN_IN_URL);
+    return null;
   }
 
   return result.data;
 });
+
+export const requireUser = async () => {
+  const user = await getUser();
+
+  if (!user) {
+    redirect(ACCESS_DENIED_URL);
+  }
+};
+
+export const requireAdmin = async () => {
+  const user = await getUser();
+
+  if (!user || user.role !== 'admin') {
+    redirect(ACCESS_DENIED_URL);
+  }
+};

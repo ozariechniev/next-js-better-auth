@@ -50,4 +50,5 @@ export const userDTOSchema = z.object({
   email: z.string(),
   emailVerified: z.boolean(),
   image: z.string().nullable(),
+  role: z.enum(['user', 'admin']),
 });
