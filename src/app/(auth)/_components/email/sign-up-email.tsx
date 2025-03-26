@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Body, Button, Container, Head, Heading, Hr, Html, Tailwind, Text, render } from '@react-email/components';
+import { Body, Button, Container, Head, Heading, Hr, Html, Tailwind, Text, render } from 'jsx-email';
 
 type SignUpEmailProps = {
   url: string;
@@ -13,20 +13,26 @@ export function SignUpEmail({ url }: SignUpEmailProps) {
         <Body className="mx-auto my-auto bg-white px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Heading className="mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black">
-              Hello, welcome to Acme Inc.
+              Welcome to Acme Inc.
             </Heading>
             <Text className="text-[14px] leading-[24px] text-black">
               We&apos;re excited to have you on board. To get started, please verify your email address by clicking the
               button below:
             </Text>
             <Button
-              className="rounded bg-[#000000] px-5 py-3 text-center text-[12px] font-semibold text-white no-underline"
               href={url}
+              align="center"
+              backgroundColor="#000000"
+              borderRadius={5}
+              textColor="#ffffff"
+              width={135}
+              height={40}
             >
-              Verify My Email
+              Verify Email
             </Button>
+            <Text className="mt-4 text-[14px] leading-[24px] text-black">This link will expire in 24 hours.</Text>
             <Text className="mt-4 text-[14px] leading-[24px] text-black">
-              This link will expire in 24 hours. If you didn&apos;t request this email, you can safely ignore it.
+              If you didn&apos;t request this email, you can safely ignore it.
             </Text>
             <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
             <Text className="text-[12px] leading-[24px] text-[#666666]">

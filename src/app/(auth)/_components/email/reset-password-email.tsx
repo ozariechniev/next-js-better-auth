@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Body, Button, Container, Head, Heading, Hr, Html, Tailwind, Text, render } from '@react-email/components';
+import { Body, Button, Container, Head, Heading, Hr, Html, Tailwind, Text, render } from 'jsx-email';
 
 type ResetPasswordEmailProps = {
   url: string;
@@ -14,7 +14,7 @@ export function ResetPasswordEmail({ url, userEmail }: ResetPasswordEmailProps) 
         <Body className="mx-auto my-auto bg-white px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Heading className="mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black">
-              Hello, reset your password to Acme Inc.
+              Reset your password to Acme Inc.
             </Heading>
 
             {userEmail && (
@@ -28,8 +28,13 @@ export function ResetPasswordEmail({ url, userEmail }: ResetPasswordEmailProps) 
             </Text>
 
             <Button
-              className="rounded bg-[#000000] px-5 py-3 text-center text-[12px] font-semibold text-white no-underline"
               href={url}
+              align="center"
+              backgroundColor="#000000"
+              borderRadius={5}
+              textColor="#ffffff"
+              width={135}
+              height={40}
             >
               Reset Password
             </Button>
