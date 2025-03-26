@@ -12,8 +12,26 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { FORGOT_PASSWORD_URL, RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
+import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
 import { resetPasswordSchema } from '@/lib/definitions';
+
+export function ResetPasswordMessage() {
+  const router = useRouter();
+
+  return (
+    <Card className="rounded-sm">
+      <CardHeader>
+        <CardTitle>Invalid token</CardTitle>
+        <CardDescription>Token is invalid or has expired. Please request a new password reset link.</CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Button className="h-12 w-full" onClick={() => router.push(FORGOT_PASSWORD_URL)}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to {FORGOT_PASSWORD_LABEL}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
 
 export function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -54,19 +72,7 @@ export function ResetPasswordForm() {
   };
 
   if (!token) {
-    return (
-      <Card className="rounded-sm">
-        <CardHeader>
-          <CardTitle>Invalid token</CardTitle>
-          <CardDescription>Token is invalid or has expired. Please request a new password reset link.</CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Button className="h-12 w-full" onClick={() => router.push(FORGOT_PASSWORD_URL)}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Forgot password
-          </Button>
-        </CardFooter>
-      </Card>
-    );
+    return <ResetPasswordMessage />;
   }
 
   return (
