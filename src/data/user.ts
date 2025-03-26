@@ -4,7 +4,7 @@ import { cache } from 'react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
-import { ACCESS_DENIED_URL } from '@/lib/constants';
+import { SIGN_IN_URL } from '@/lib/constants';
 import { userDTOSchema } from '@/lib/definitions';
 
 export const getUser = cache(async () => {
@@ -13,7 +13,7 @@ export const getUser = cache(async () => {
   });
 
   if (!session?.user) {
-    redirect(ACCESS_DENIED_URL);
+    redirect(SIGN_IN_URL);
   }
 
   const result = userDTOSchema.safeParse({
@@ -25,7 +25,7 @@ export const getUser = cache(async () => {
 
   if (!result.success) {
     console.error('User data validation failed:', result.error.flatten());
-    redirect(ACCESS_DENIED_URL);
+    redirect(SIGN_IN_URL);
   }
 
   return result.data;
