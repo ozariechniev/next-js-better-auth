@@ -13,6 +13,12 @@ export const RESET_PASSWORD_URL = '/reset-password';
 export const DASHBOARD_LABEL = 'Dashboard';
 export const DASHBOARD_URL = '/dashboard';
 
+export const DASHBOARD_PROFILE_LABEL = 'Profile';
+export const DASHBOARD_PROFILE_URL = '/dashboard/profile';
+
+export const DASHBOARD_SETTINGS_LABEL = 'Settings';
+export const DASHBOARD_SETTINGS_URL = '/dashboard/settings';
+
 export const ACCESS_DENIED_URL = '/access-denied';
 
 export const AUTH_NAV_LINKS = [

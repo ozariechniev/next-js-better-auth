@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import { BadgeCheck, ChevronsUpDown, LogOut, Settings } from 'lucide-react';
+import { ChevronsUpDown, LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,14 +15,38 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { authClient } from '@/lib/auth-client';
-import { UserDTO } from '@/lib/types';
+import { authClient, getAuthClientUser } from '@/lib/auth-client';
+import {
+  DASHBOARD_LABEL,
+  DASHBOARD_PROFILE_LABEL,
+  DASHBOARD_PROFILE_URL,
+  DASHBOARD_SETTINGS_LABEL,
+  DASHBOARD_SETTINGS_URL,
+  DASHBOARD_URL,
+} from '@/lib/constants';
 
-export function UserMenu({ user }: { user: UserDTO }) {
+export function UserMenu() {
+  const user = getAuthClientUser();
   const router = useRouter();
   const pathname = usePathname();
   const { isMobile } = useSidebar();
   const [signingOut, setSigningOut] = useState(false);
+
+  const onSignOut = () => {
+    setSigningOut(true);
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess() {
+          router.push('/');
+        },
+      },
+    });
+    setSigningOut(false);
+  };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <SidebarMenu>
@@ -65,36 +89,29 @@ export function UserMenu({ user }: { user: UserDTO }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                className={pathname.startsWith('/dashboard/account') ? 'bg-sidebar-accent' : ''}
-                onClick={() => router.push('/dashboard/account')}
+                className={pathname === DASHBOARD_URL ? 'bg-sidebar-accent' : ''}
+                onClick={() => router.push(DASHBOARD_URL)}
               >
-                <BadgeCheck />
-                Account
+                <LayoutDashboard />
+                {DASHBOARD_LABEL}
               </DropdownMenuItem>
               <DropdownMenuItem
-                className={pathname.startsWith('/dashboard/settings') ? 'bg-sidebar-accent' : ''}
-                onClick={() => router.push('/dashboard/settings')}
+                className={pathname.startsWith(DASHBOARD_PROFILE_URL) ? 'bg-sidebar-accent' : ''}
+                onClick={() => router.push(DASHBOARD_PROFILE_URL)}
+              >
+                <User />
+                {DASHBOARD_PROFILE_LABEL}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className={pathname.startsWith(DASHBOARD_SETTINGS_URL) ? 'bg-sidebar-accent' : ''}
+                onClick={() => router.push(DASHBOARD_SETTINGS_URL)}
               >
                 <Settings />
-                Settings
+                {DASHBOARD_SETTINGS_LABEL}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              variant="destructive"
-              disabled={signingOut}
-              onClick={async () => {
-                setSigningOut(true);
-                await authClient.signOut({
-                  fetchOptions: {
-                    onSuccess() {
-                      router.push('/');
-                    },
-                  },
-                });
-                setSigningOut(false);
-              }}
-            >
+            <DropdownMenuItem variant="destructive" disabled={signingOut} onClick={onSignOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

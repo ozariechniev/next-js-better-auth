@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowUpCircleIcon, Settings, User } from 'lucide-react';
+import { ArrowUpCircleIcon } from 'lucide-react';
+import { SidebarAccountMenu } from '@/app/(protected)/dashboard/_components/sidebar-account-menu';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -14,6 +13,7 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import { UserMenu } from './user-menu';
 
 export async function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -32,29 +32,11 @@ export async function DashboardSidebar({ ...props }: React.ComponentProps<typeof
       </SidebarHeader>
       <SidebarSeparator className="w-auto!" />
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="#">
-                  <User />
-                  <span>Profile</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="#">
-                  <Settings />
-                  <span>Settings</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+        <SidebarAccountMenu />
       </SidebarContent>
-      <SidebarFooter></SidebarFooter>
+      <SidebarFooter>
+        <UserMenu />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
