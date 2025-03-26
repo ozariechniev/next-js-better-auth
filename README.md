@@ -1,5 +1,9 @@
 ## Better Auth Email/Password authentication with Next.js
 
+<p align="center">
+  <img src="public/preview.jpg" alt="Preview" width="100%">
+</p>
+
 ### Tech Stack
 
 - [Next.js](https://nextjs.org/)
