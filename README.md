@@ -40,11 +40,11 @@ This project provides a comprehensive authentication system for **Next.js** appl
 
 ### 🛠 Tech️ Stack
 
-- **Framework** - Next.js
-- **Authentication** - Better Auth
-- **Database** - PostgreSQL + Drizzle ORM
-- **Email** - JSX Email, NodeMailer
-- **UI** - Tailwind CSS, shadcn/ui
+- **Framework** - [Next.js](https://nextjs.org/) `v15`
+- **Authentication** - [Better Auth](https://www.better-auth.com/)
+- **Database** - PostgreSQL + [Drizzle ORM](https://orm.drizzle.team/)
+- **Email** - [JSX Email](https://jsx.email/), NodeMailer
+- **UI** - [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
 - **Infrastructure** - Docker
 
 ---
