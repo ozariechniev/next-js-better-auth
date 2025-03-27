@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { SIGN_IN_LABEL, SIGN_IN_URL, SIGN_UP_LABEL, SIGN_UP_URL } from '@/lib/constants';
+import { SignInClientButton } from '@/components/sign-in';
 
 export function Navbar() {
   return (
@@ -13,12 +12,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" asChild>
-            <Link href={SIGN_IN_URL}>{SIGN_IN_LABEL}</Link>
-          </Button>
-          <Button asChild>
-            <Link href={SIGN_UP_URL}>{SIGN_UP_LABEL}</Link>
-          </Button>
+          <SignInClientButton />
         </div>
       </div>
     </header>
