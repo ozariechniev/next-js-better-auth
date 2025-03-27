@@ -1,17 +1,21 @@
 import { requireUser } from '@/data/user';
+import { UserProfile } from '../_components/profile/user-profile';
+import { UserSessions } from '../_components/profile/user-sessions';
+import { UserSettings } from '../_components/profile/user-settings';
 
 export default async function AccountPage() {
   await requireUser();
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      <h1 className="text-2xl">User Profile</h1>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="bg-muted/50 aspect-video rounded-xl" />
-        <div className="bg-muted/50 aspect-video rounded-xl" />
-        <div className="bg-muted/50 aspect-video rounded-xl" />
+    <div className="p-4 lg:p-6">
+      <h1 className="mb-5 text-2xl">User Profile</h1>
+      <div className="@container">
+        <div className="mb-5 grid grid-cols-1 gap-6 overflow-hidden @lg:grid-cols-[3fr_1fr]">
+          <UserProfile />
+          <UserSettings />
+        </div>
+        <UserSessions />
       </div>
-      <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
     </div>
   );
 }
