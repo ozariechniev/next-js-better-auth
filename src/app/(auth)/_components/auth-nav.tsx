@@ -39,15 +39,11 @@ export function AuthNav({ links }: AuthNavProps) {
 }
 
 export function AuthNavItem({ isActive, href, children }: AuthNavItemProps) {
-  return (
-    <>
-      {isActive ? (
-        <div className={classes.active}>{children}</div>
-      ) : (
-        <Button variant="ghost" className={classes.link} asChild>
-          <Link href={href}>{children}</Link>
-        </Button>
-      )}
-    </>
+  return isActive ? (
+    <div className={classes.active}>{children}</div>
+  ) : (
+    <Button variant="ghost" className={classes.link} asChild>
+      <Link href={href}>{children}</Link>
+    </Button>
   );
 }
