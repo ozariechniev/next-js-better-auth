@@ -72,13 +72,13 @@ cd next-js-better-auth
 npm install
 ```
 
-**3. Create a `.env.local` file**
+**3. Create a `.env` file**
 
 ```bash
-cp env.example .env.local
+cp env.example .env
 ```
 
-**4. Generate Better Auth secret key and update .env.local**
+**4. Generate Better Auth secret key and update .env**
 
 ```bash
 npx @better-auth/cli@latest secret
@@ -126,12 +126,12 @@ npm run dev
 
 - Ensure Docker is running
 - Verify PostgreSQL container is up (`docker ps`)
-- Check your `.env.local` `DATABASE_URL` matches the Docker configuration
+- Check your `.env` `DATABASE_URL` matches the Docker configuration
 
 #### Email Not Sending?
 
 - Check Mailpit interface at `http://localhost:8025/`
-- Verify SMTP settings in `.env.local`
+- Verify SMTP settings in `.env`
 - Ensure your email service is properly configured
 
 ---
