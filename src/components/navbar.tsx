@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SignInClientButton } from '@/components/sign-in';
+import { SignInButton } from '@/components/sign-in-button';
 
 export function Navbar() {
   return (
@@ -12,7 +12,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <SignInClientButton />
+          <SignInButton />
         </div>
       </div>
     </header>
