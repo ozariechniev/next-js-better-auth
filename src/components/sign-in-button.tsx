@@ -6,13 +6,13 @@ import { authClient } from '@/lib/auth-client';
 import { DASHBOARD_LABEL, DASHBOARD_URL, SIGN_IN_LABEL, SIGN_IN_URL } from '@/lib/constants';
 
 export function SignInButton() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session, isPending, error } = authClient.useSession();
 
-  if (isPending) {
+  if (!session || isPending || error) {
     return null;
   }
 
-  return session ? (
+  return session?.user ? (
     <Button asChild>
       <Link href={DASHBOARD_URL}>{DASHBOARD_LABEL}</Link>
     </Button>
