@@ -23,16 +23,16 @@ export function serializeDataToProps<T>(data: T | null): T | null {
   }
 }
 
-export function getUAInfo(userAgent: string) {
+export function getUAInfo(userAgent: string | '') {
   const parser = new UAParser(userAgent);
 
   return {
-    deviceType: parser.getDevice().type || '',
-    osName: parser.getOS().name || '',
-    browserName: parser.getBrowser().name || '',
+    deviceType: parser.getDevice().type,
+    osName: parser.getOS().name,
+    browserName: parser.getBrowser().name,
   };
 }
 
-export function dateToRelative(dateString: string): string {
+export function dateToRelative(dateString: Date): string {
   return dayjs(new Date(dateString)).fromNow();
 }

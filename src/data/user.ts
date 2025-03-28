@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import { ACCESS_DENIED_URL } from '@/lib/constants';
 import { userRoleEnum, userSchema } from '@/lib/definitions';
-import { Session } from '@/lib/types';
+import { Session, SessionDetails } from '@/lib/types';
 
 export const getUser = cache(async () => {
   const session: Session | null = await auth.api.getSession({
@@ -32,6 +32,18 @@ export const getUser = cache(async () => {
   }
 
   return result.data;
+});
+
+export const getUserSessions = cache(async () => {
+  const sessions: SessionDetails[] | null = await auth.api.listSessions({
+    headers: await headers(),
+  });
+
+  if (!sessions) {
+    return null;
+  }
+
+  return sessions;
 });
 
 export const requireUser = cache(async () => {

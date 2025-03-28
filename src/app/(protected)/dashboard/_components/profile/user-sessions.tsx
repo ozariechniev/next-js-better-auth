@@ -1,37 +1,44 @@
 'use client';
 
-import { Monitor, Smartphone } from 'lucide-react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Loader2, Monitor, Smartphone } from 'lucide-react';
+import { toast } from 'sonner';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { authClient } from '@/lib/auth-client';
+import { SessionDetails } from '@/lib/types';
+import { dateToRelative, getUAInfo } from '@/lib/utils';
 
-const sessions = [
-  {
-    id: '1',
-    deviceType: 'desktop',
-    userAgent: 'Chrome on Windows',
-    createdAt: '2023-04-15 10:30',
-    lastActive: '2023-05-01 14:30',
-  },
-  {
-    id: '2',
-    deviceType: 'mobile',
-    userAgent: 'Safari on iPhone',
-    createdAt: '2023-04-20 15:45',
-    lastActive: '2023-05-02 09:15',
-  },
-  {
-    id: '3',
-    deviceType: 'desktop',
-    userAgent: 'Firefox on MacOS',
-    createdAt: '2023-04-25 08:20',
-    lastActive: '2023-05-03 16:45',
-  },
-];
+export function UserSessions({ active, sessions }: { active: string; sessions: SessionDetails[] }) {
+  const router = useRouter();
+  const sessionsWithUA = sessions
+    .filter((session) => session.userAgent)
+    .sort((a, b) => {
+      if (a.id === active) return -1;
+      if (b.id === active) return 1;
 
-export function UserSessions() {
-  const handleRevokeSession = (sessionId: string) => {
-    console.log(`Revoke session with id: ${sessionId}`);
+      return +new Date(b.createdAt) - +new Date(a.createdAt);
+    });
+  const [isRevoking, setIsRevoking] = useState(false);
+
+  const handleRevokeSession = async (token: string) => {
+    setIsRevoking(true);
+
+    const response = await authClient.revokeSession({
+      token,
+    });
+
+    if (response.error) {
+      toast.error(response.error.message);
+    } else {
+      toast.success('Session revoked successfully');
+    }
+
+    router.refresh();
+    setIsRevoking(false);
   };
 
   return (
@@ -41,35 +48,52 @@ export function UserSessions() {
       </CardHeader>
       <CardContent>
         <div className="max-h-[400px] overflow-auto">
-          {/* Update the sessions table in the Column 2 section */}
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[60px]">Device</TableHead>
                 <TableHead>User Agent</TableHead>
-                <TableHead>Created At</TableHead>
+                <TableHead className="w-[200px]">Created At</TableHead>
                 <TableHead className="w-[100px]">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sessions.map((session) => (
-                <TableRow key={session.id}>
-                  <TableCell>
-                    {session.deviceType === 'mobile' ? (
-                      <Smartphone className="text-muted-foreground h-5 w-5" />
-                    ) : (
-                      <Monitor className="text-muted-foreground h-5 w-5" />
-                    )}
-                  </TableCell>
-                  <TableCell className="font-medium">{session.userAgent}</TableCell>
-                  <TableCell>{session.createdAt}</TableCell>
-                  <TableCell>
-                    <Button variant="destructive" size="sm" onClick={() => handleRevokeSession(session.id)}>
-                      Revoke
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {sessionsWithUA.map((session) => {
+                const ua = getUAInfo(session.userAgent || '');
+
+                return (
+                  <TableRow key={session.id}>
+                    <TableCell>
+                      {ua.deviceType === 'mobile' ? (
+                        <Smartphone className="text-muted-foreground h-5 w-5" />
+                      ) : (
+                        <Monitor className="text-muted-foreground h-5 w-5" />
+                      )}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {ua.browserName}, {ua.osName}
+                    </TableCell>
+                    <TableCell>{dateToRelative(session.createdAt)}</TableCell>
+                    <TableCell>
+                      {session.id === active ? (
+                        <Badge className="w-full py-2" variant="outline">
+                          Current
+                        </Badge>
+                      ) : (
+                        <Button
+                          disabled={isRevoking}
+                          variant="destructive"
+                          size="sm"
+                          className="w-full"
+                          onClick={() => handleRevokeSession(session.token)}
+                        >
+                          {isRevoking ? <Loader2 className="h-4 w-4 animate-spin" /> : <span>Revoke</span>}
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
