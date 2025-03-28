@@ -34,7 +34,7 @@ export const getUser = cache(async () => {
   return result.data;
 });
 
-export const requireUser = async () => {
+export const requireUser = cache(async () => {
   const user = await getUser();
 
   if (!user) {
@@ -42,9 +42,9 @@ export const requireUser = async () => {
   }
 
   return user;
-};
+});
 
-export const requireAdmin = async () => {
+export const requireAdmin = cache(async () => {
   const user = await getUser();
 
   if (!user || user.role !== userRoleEnum.enum.admin) {
@@ -52,4 +52,4 @@ export const requireAdmin = async () => {
   }
 
   return user;
-};
+});
