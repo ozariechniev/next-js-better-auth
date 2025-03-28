@@ -45,7 +45,7 @@ export function SignInForm() {
         onRequest: () => {
           setSubmitting(true);
         },
-        onSuccess: async () => {
+        onSuccess: () => {
           router.push(DASHBOARD_URL);
         },
         onError: (ctx) => {

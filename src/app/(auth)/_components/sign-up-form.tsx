@@ -76,7 +76,7 @@ export function SignUpForm() {
         onRequest: () => {
           setSubmitting(true);
         },
-        onSuccess: async () => {
+        onSuccess: () => {
           form.reset();
           setSubmitted(true);
         },

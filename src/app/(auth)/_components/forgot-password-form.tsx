@@ -68,7 +68,7 @@ export function ForgotPasswordForm() {
         onRequest: () => {
           setSubmitting(true);
         },
-        onSuccess: async () => {
+        onSuccess: () => {
           form.reset();
           setSubmitted(true);
         },

@@ -60,7 +60,7 @@ export function ResetPasswordForm() {
         onRequest: () => {
           setSubmitting(true);
         },
-        onSuccess: async () => {
+        onSuccess: () => {
           toast.success('Password reset successfully');
           router.push(SIGN_IN_URL);
         },
