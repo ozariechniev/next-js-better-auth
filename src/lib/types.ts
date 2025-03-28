@@ -1,4 +1,6 @@
 import { z } from 'zod';
-import { userDTOSchema } from '@/lib/definitions';
+import { userSchema } from '@/lib/definitions';
+import { auth } from './auth';
 
-export type UserDTO = z.infer<typeof userDTOSchema>;
+export type Session = typeof auth.$Infer.Session;
+export type User = z.infer<typeof userSchema>;
