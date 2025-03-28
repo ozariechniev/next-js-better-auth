@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { betterFetch } from '@better-fetch/fetch';
-import { Session } from '@/lib/auth-types';
 import {
   ACCESS_DENIED_URL,
   DASHBOARD_URL,
@@ -9,6 +8,7 @@ import {
   SIGN_IN_URL,
   SIGN_UP_URL,
 } from '@/lib/constants';
+import { Session } from '@/lib/types';
 
 const protectedRoutes = [DASHBOARD_URL];
 const guestRoutes = [SIGN_IN_URL, SIGN_UP_URL, RESET_PASSWORD_URL, FORGOT_PASSWORD_URL];
