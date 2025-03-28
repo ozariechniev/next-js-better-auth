@@ -8,7 +8,7 @@ import { DASHBOARD_LABEL, DASHBOARD_URL, SIGN_IN_LABEL, SIGN_IN_URL } from '@/li
 export function SignInButton() {
   const { data: session, isPending, error } = authClient.useSession();
 
-  if (!session || isPending || error) {
+  if (isPending || error) {
     return null;
   }
 
