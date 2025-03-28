@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import { ChevronsUpDown, LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
+import { ChevronsUpDown, LayoutDashboard, LogOut, Settings, UserIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { authClient, getAuthClientUser } from '@/lib/auth-client';
+import { authClient } from '@/lib/auth-client';
 import {
   DASHBOARD_LABEL,
   DASHBOARD_PROFILE_LABEL,
@@ -24,9 +24,9 @@ import {
   DASHBOARD_SETTINGS_URL,
   DASHBOARD_URL,
 } from '@/lib/constants';
+import { User } from '@/lib/types';
 
-export function UserMenu() {
-  const user = getAuthClientUser();
+export function UserMenu({ user }: { user: User }) {
   const router = useRouter();
   const pathname = usePathname();
   const { isMobile } = useSidebar();
@@ -43,10 +43,6 @@ export function UserMenu() {
     });
     setSigningOut(false);
   };
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <SidebarMenu>
@@ -99,7 +95,7 @@ export function UserMenu() {
                 className={pathname.startsWith(DASHBOARD_PROFILE_URL) ? 'bg-sidebar-accent' : ''}
                 onClick={() => router.push(DASHBOARD_PROFILE_URL)}
               >
-                <User />
+                <UserIcon />
                 {DASHBOARD_PROFILE_LABEL}
               </DropdownMenuItem>
               <DropdownMenuItem

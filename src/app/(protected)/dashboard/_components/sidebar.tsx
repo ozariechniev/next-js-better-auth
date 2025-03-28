@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowUpCircleIcon } from 'lucide-react';
-import { SidebarAccountMenu } from '@/app/(protected)/dashboard/_components/sidebar-account-menu';
 import {
   Sidebar,
   SidebarContent,
@@ -13,9 +12,24 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
-import { UserMenu } from './user-menu';
+import { getUser } from '@/data/user';
+import { User } from '@/lib/types';
+import { serializeDataToProps } from '@/lib/utils';
+import { AccountMenu } from './sidebar/account-menu';
+import { UserMenu } from './sidebar/user-menu';
 
 export async function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  let user: User | null = null;
+  let userData: User | null = null;
+
+  try {
+    user = await getUser();
+    userData = serializeDataToProps(user);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -32,11 +46,9 @@ export async function DashboardSidebar({ ...props }: React.ComponentProps<typeof
       </SidebarHeader>
       <SidebarSeparator className="w-auto!" />
       <SidebarContent>
-        <SidebarAccountMenu />
+        <AccountMenu />
       </SidebarContent>
-      <SidebarFooter>
-        <UserMenu />
-      </SidebarFooter>
+      <SidebarFooter>{userData && <UserMenu user={userData} />}</SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

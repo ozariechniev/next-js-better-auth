@@ -18,7 +18,7 @@ import {
   DASHBOARD_SETTINGS_URL,
 } from '@/lib/constants';
 
-export function SidebarAccountMenu() {
+export function AccountMenu() {
   const pathname = usePathname();
 
   return (
