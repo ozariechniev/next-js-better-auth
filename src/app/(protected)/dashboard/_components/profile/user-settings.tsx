@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -16,15 +15,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ChangePasswordForm } from './change-password-form';
-
-const user = {
-  name: 'John Doe',
-  verified: true,
-  email: 'test@test.com',
-};
+import { EditProfileForm } from './edit-profile-form';
 
 export function UserSettings() {
-  const [openEditProfile, setOpenEditProfile] = useState(false);
   const [openDeleteProfile, setOpenDeleteProfile] = useState(false);
 
   return (
@@ -33,39 +26,7 @@ export function UserSettings() {
         <CardTitle>User Settings</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col space-y-4">
-        <Dialog open={openEditProfile} onOpenChange={setOpenEditProfile}>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full">
-              Edit Profile
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit Profile</DialogTitle>
-              <DialogDescription>Update your name and profile picture.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="flex flex-col items-center gap-4">
-                <div className="bg-muted relative h-24 w-24 overflow-hidden rounded-full">
-                  <User className="h-full w-full p-4" />
-                </div>
-                <div className="grid w-full gap-2">
-                  <Label htmlFor="picture">Profile Picture</Label>
-                  <Input id="picture" type="file" accept="image/*" />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue={user.name} />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" onClick={() => setOpenEditProfile(false)}>
-                Save changes
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <EditProfileForm />
         <ChangePasswordForm />
         <Dialog open={openDeleteProfile} onOpenChange={setOpenDeleteProfile}>
           <DialogTrigger asChild>
