@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cookies } from 'next/headers';
-import { Separator } from '@radix-ui/react-separator';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { DASHBOARD_URL } from '@/lib/constants';
 import { DashboardSidebar } from './_components/sidebar';
