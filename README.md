@@ -1,17 +1,19 @@
 <!-- TOC -->
-  * [Next.js BetterAuth Integration](#nextjs-betterauth-integration)
-    * [✏️ Overview](#-overview)
-    * [🚀 Features](#-features)
-    * [🛠 Tech️ Stack](#-tech-stack)
-    * [📋 Prerequisites](#-prerequisites)
-    * [📦 Quick Start](#-quick-start)
-    * [❓ Troubleshooting](#-troubleshooting)
-      * [Database Connection Issues](#database-connection-issues)
-      * [Email Not Sending?](#email-not-sending)
-    * [⚙️  Other platforms](#-other-platforms)
-      * [Database](#database)
-      * [Email Service](#email-service)
-    * [🤝  Contributing](#-contributing)
+- [Next.js BetterAuth Integration](#nextjs-betterauth-integration)
+  - [✏️ Overview](#️-overview)
+  - [🚀 Features](#-features)
+  - [🛠 Tech️ Stack](#-tech️-stack)
+  - [📋 Prerequisites](#-prerequisites)
+  - [📦 Quick Start](#-quick-start)
+  - [❓ Troubleshooting](#-troubleshooting)
+    - [Database Connection Issues](#database-connection-issues)
+    - [Email Not Sending?](#email-not-sending)
+  - [⚙️  Other platforms](#️--other-platforms)
+    - [Database](#database)
+    - [Email Service](#email-service)
+  - [Roadmap](#roadmap)
+  - [User Management](#user-management)
+  - [🤝  Contributing](#--contributing)
 <!-- TOC -->
 
 ## Next.js BetterAuth Integration
@@ -150,6 +152,26 @@ Drizzle ORM configuration might need to be updated for other databases, adapters
 Email service configuration might need to be updated for other providers
 
 - `src/lib/send-email.ts`
+
+---
+
+### Roadmap
+
+- [x] Email & Password authentication
+  - [x] Sign-in
+  - [x] Sign-up with email confirmation
+  - [x] Forgot password
+  - [x] Reset password with email confirmation
+
+### User Management
+
+- [x] User profile
+  - [x] Active sessions
+  - [x] Personal information
+  - [x] Settings
+    - [ ] Edit information
+    - [x] Change password
+    - [ ] Delete profile
 
 ---
 
