@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ChangePasswordForm } from './change-password-form';
 
 const user = {
   name: 'John Doe',
@@ -25,7 +26,6 @@ const user = {
 export function UserSettings() {
   const [openEditProfile, setOpenEditProfile] = useState(false);
   const [openDeleteProfile, setOpenDeleteProfile] = useState(false);
-  const [openChangePassword, setOpenChangePassword] = useState(false);
 
   return (
     <Card className="font-mono">
@@ -33,7 +33,6 @@ export function UserSettings() {
         <CardTitle>User Settings</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col space-y-4">
-        {/* Edit Profile Button & Dialog - Now first and outlined */}
         <Dialog open={openEditProfile} onOpenChange={setOpenEditProfile}>
           <DialogTrigger asChild>
             <Button variant="outline" className="w-full">
@@ -67,42 +66,7 @@ export function UserSettings() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-
-        {/* Change Password Button & Dialog - Now second and already outlined */}
-        <Dialog open={openChangePassword} onOpenChange={setOpenChangePassword}>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full">
-              Change Password
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Change Password</DialogTitle>
-              <DialogDescription>Update your password to a new secure one.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="current-password">Current Password</Label>
-                <Input id="current-password" type="password" placeholder="Enter current password" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="new-password">New Password</Label>
-                <Input id="new-password" type="password" placeholder="Enter new password" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="confirm-password">Confirm Password</Label>
-                <Input id="confirm-password" type="password" placeholder="Confirm new password" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" onClick={() => setOpenChangePassword(false)}>
-                Update Password
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Delete Profile Button & Dialog - Now last and still destructive */}
+        <ChangePasswordForm />
         <Dialog open={openDeleteProfile} onOpenChange={setOpenDeleteProfile}>
           <DialogTrigger asChild>
             <Button variant="destructive" className="w-full">
