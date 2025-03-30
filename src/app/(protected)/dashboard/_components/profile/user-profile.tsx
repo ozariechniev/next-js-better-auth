@@ -15,7 +15,7 @@ export function UserProfile({ user }: { user: User }) {
       <CardContent className="flex flex-col items-center space-y-4">
         <div className="bg-muted relative size-24 overflow-hidden rounded-full">
           {user.image ? (
-            <Image src={user.image} alt={user.name} layout="fill" objectFit="cover" />
+            <Image src={user.image} alt={user.name} fill={true} style={{ objectFit: 'cover' }} />
           ) : (
             <UserIcon className="h-full w-full p-4" />
           )}
