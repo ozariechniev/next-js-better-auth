@@ -36,3 +36,13 @@ export function getUAInfo(userAgent: string | '') {
 export function dateToRelative(dateString: Date): string {
   return dayjs(new Date(dateString)).fromNow();
 }
+
+export async function convertToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+}
