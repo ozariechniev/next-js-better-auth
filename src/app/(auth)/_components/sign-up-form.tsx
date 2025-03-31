@@ -2,50 +2,19 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { ErrorContext } from '@better-fetch/fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, Loader2, Mail } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import type { z } from 'zod';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { DASHBOARD_URL, SIGN_IN_LABEL, SIGN_IN_URL, SIGN_UP_LABEL } from '@/lib/constants';
+import { SIGN_UP_LABEL } from '@/lib/constants';
 import { signUpSchema } from '@/lib/definitions';
-
-export function SignUpMessage() {
-  const router = useRouter();
-
-  return (
-    <Card className="rounded-sm">
-      <CardHeader>
-        <CardTitle>Check your email</CardTitle>
-        <CardDescription>
-          We&apos;ve sent a verification link to your email. Please, check your email and click the link to verify your
-          account.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Alert variant="default">
-          <Mail className="h-4 w-4" />
-          <AlertTitle>Please, pay attention</AlertTitle>
-          <AlertDescription>
-            If you don&apos;t see the email, check your spam folder. If you still don&apos;t see it, please contact
-            support.
-          </AlertDescription>
-        </Alert>
-      </CardContent>
-      <CardFooter>
-        <Button className="h-12 w-full" onClick={() => router.push(SIGN_IN_URL)}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to {SIGN_IN_LABEL}
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
+import { SignUpMessage } from './sign-up-message';
 
 export function SignUpForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -62,29 +31,29 @@ export function SignUpForm() {
   });
 
   const onSubmit = async (formData: z.infer<typeof signUpSchema>) => {
-    await authClient.signUp.email(
-      {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        callbackURL: DASHBOARD_URL,
+    const data = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    const fetchOptions = {
+      onResponse: () => {
+        setSubmitting(false);
       },
-      {
-        onResponse: () => {
-          setSubmitting(false);
-        },
-        onRequest: () => {
-          setSubmitting(true);
-        },
-        onSuccess: () => {
-          form.reset();
-          setSubmitted(true);
-        },
-        onError: (ctx) => {
-          toast.error(ctx.error.message ?? 'Internal server error. Please, try again later.');
-        },
-      }
-    );
+      onRequest: () => {
+        setSubmitting(true);
+      },
+      onSuccess: () => {
+        form.reset();
+        setSubmitted(true);
+      },
+      onError: (ctx: ErrorContext) => {
+        toast.error(ctx.error.message ?? 'Internal server error. Please, try again later.');
+      },
+    };
+
+    await authClient.signUp.email(data, fetchOptions);
   };
 
   if (submitted) {
