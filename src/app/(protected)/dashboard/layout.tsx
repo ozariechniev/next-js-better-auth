@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
 import { cookies } from 'next/headers';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { DASHBOARD_URL } from '@/lib/constants';
+import { Breadcrumbs } from './_components/breadcrumbs';
 import { DashboardSidebar } from './_components/sidebar';
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
@@ -19,13 +18,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
             <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href={DASHBOARD_URL}>Dashboard</BreadcrumbLink>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <Breadcrumbs />
             </div>
           </header>
           {children}

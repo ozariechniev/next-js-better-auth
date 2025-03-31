@@ -14,10 +14,10 @@ export const DASHBOARD_LABEL = 'Dashboard';
 export const DASHBOARD_URL = '/dashboard';
 
 export const DASHBOARD_PROFILE_LABEL = 'Profile';
-export const DASHBOARD_PROFILE_URL = '/dashboard/profile';
+export const DASHBOARD_PROFILE_URL = '/dashboard/account/profile';
 
 export const DASHBOARD_SETTINGS_LABEL = 'Settings';
-export const DASHBOARD_SETTINGS_URL = '/dashboard/settings';
+export const DASHBOARD_SETTINGS_URL = '/dashboard/account/settings';
 
 export const ACCESS_DENIED_URL = '/access-denied';
 

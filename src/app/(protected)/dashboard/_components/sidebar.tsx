@@ -15,8 +15,8 @@ import {
 import { getUser } from '@/data/user';
 import { User } from '@/lib/types';
 import { serializeDataToProps } from '@/lib/utils';
-import { AccountMenu } from './sidebar/account-menu';
-import { UserMenu } from './sidebar/user-menu';
+import { AccountMenu } from './account-menu';
+import { UserMenu } from './user-menu';
 
 export async function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   let user: User | null = null;

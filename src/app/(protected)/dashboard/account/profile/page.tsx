@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
 import { getUser, getUserSessions } from '@/data/user';
 import { ACCESS_DENIED_URL } from '@/lib/constants';
-import { UserProfile } from '../_components/profile/user-profile';
-import { UserSessions } from '../_components/profile/user-sessions';
-import { UserSettings } from '../_components/profile/user-settings';
+import { UserProfile } from './_components/user-profile';
+import { UserSessions } from './_components/user-sessions';
+import { UserSettings } from './_components/user-settings';
 
 export default async function AccountPage() {
   const user = await getUser();
