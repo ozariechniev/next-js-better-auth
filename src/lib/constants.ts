@@ -25,3 +25,5 @@ export const AUTH_NAV_LINKS = [
   { name: SIGN_IN_LABEL, href: SIGN_IN_URL },
   { name: SIGN_UP_LABEL, href: SIGN_UP_URL },
 ] as const;
+
+export const USER_ROLE = ['user', 'admin'] as const;

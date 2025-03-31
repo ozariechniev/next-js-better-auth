@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { USER_ROLE } from './constants';
 
 const getNameSchema = () =>
   z.string().min(1, { message: 'Name is required' }).max(50, { message: 'Name must be less than 50 characters' });
@@ -11,11 +12,9 @@ const getConfirmPasswordSchema = () =>
 const getRememberMeSchema = () => z.boolean().default(false).optional();
 const getSignOutFromAllDevicesSchema = () => z.boolean().default(false).optional();
 
-const USER_ROLE = ['user', 'admin'] as const;
-
 /**
  * ----------------------------------------------------------------------------
- * Sign In Schema
+ * Auth: Sign In Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -27,7 +26,7 @@ export const signInSchema = z.object({
 
 /**
  * ----------------------------------------------------------------------------
- * Sign Up Schema
+ * Auth: Sign Up Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -45,7 +44,7 @@ export const signUpSchema = z
 
 /**
  * ----------------------------------------------------------------------------
- * Forgot Password Schema
+ * Auth: Forgot Password Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -55,7 +54,7 @@ export const forgotPasswordSchema = z.object({
 
 /**
  * ----------------------------------------------------------------------------
- * Reset Password Schema
+ * Auth: Reset Password Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -71,7 +70,7 @@ export const resetPasswordSchema = z
 
 /**
  * ----------------------------------------------------------------------------
- * Edit Profile Schema
+ * Auth: Edit Profile Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -81,7 +80,7 @@ export const editProfileSchema = z.object({
 
 /**
  * ----------------------------------------------------------------------------
- * Change Profile Password Schema
+ * Auth: Change Profile Password Schema
  * ----------------------------------------------------------------------------
  */
 
