@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { ErrorContext } from '@better-fetch/fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -31,32 +32,28 @@ export function SignInForm() {
   });
 
   const onSubmit = async (formData: z.infer<typeof signInSchema>) => {
-    await authClient.signIn.email(
-      {
-        email: formData.email,
-        password: formData.password,
-        rememberMe: formData.rememberMe,
-        callbackURL: DASHBOARD_URL,
+    const data = {
+      email: formData.email,
+      password: formData.password,
+      rememberMe: formData.rememberMe,
+    };
+
+    const fetchOptions = {
+      onResponse: () => {
+        setSubmitting(false);
       },
-      {
-        onResponse: () => {
-          setSubmitting(false);
-        },
-        onRequest: () => {
-          setSubmitting(true);
-        },
-        onSuccess: () => {
-          router.push(DASHBOARD_URL);
-        },
-        onError: (ctx) => {
-          if (ctx.error.status === 403) {
-            toast.error('Please verify your email address');
-          } else {
-            toast.error(ctx.error.message ?? 'An error occurred, please try again.');
-          }
-        },
-      }
-    );
+      onRequest: () => {
+        setSubmitting(true);
+      },
+      onSuccess: () => {
+        router.push(DASHBOARD_URL);
+      },
+      onError: (ctx: ErrorContext) => {
+        toast.error(ctx.error.message ?? 'An error occurred, please try again.');
+      },
+    };
+
+    await authClient.signIn.email(data, fetchOptions);
   };
 
   return (
