@@ -1,8 +1,8 @@
-import { Footer } from '@/components/footer';
-import { Navbar } from '@/components/navbar';
 import { CallToAction } from './_components/call-to-action';
 import { Features } from './_components/features';
+import { Footer } from './_components/footer';
 import { Hero } from './_components/hero';
+import { Navbar } from './_components/navbar';
 
 export default function Home() {
   return (

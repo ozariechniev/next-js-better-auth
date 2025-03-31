@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SignInButton } from '@/components/navbar/sign-in-button';
+import { SignInButton } from '@/components/sign-in-button';
 
 export function Navbar() {
   return (
