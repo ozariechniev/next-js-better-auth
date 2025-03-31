@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { ErrorContext } from '@better-fetch/fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -12,26 +13,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { FORGOT_PASSWORD_LABEL, FORGOT_PASSWORD_URL, RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
+import { RESET_PASSWORD_LABEL, SIGN_IN_URL } from '@/lib/constants';
 import { resetPasswordSchema } from '@/lib/definitions';
-
-export function ResetPasswordMessage() {
-  const router = useRouter();
-
-  return (
-    <Card className="rounded-sm">
-      <CardHeader>
-        <CardTitle>Invalid token</CardTitle>
-        <CardDescription>Token is invalid or has expired. Please request a new password reset link.</CardDescription>
-      </CardHeader>
-      <CardFooter>
-        <Button className="h-12 w-full" onClick={() => router.push(FORGOT_PASSWORD_URL)}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to {FORGOT_PASSWORD_LABEL}
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
+import { ResetPasswordMessage } from './reset-password-message';
 
 export function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -47,28 +31,29 @@ export function ResetPasswordForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
-    await authClient.resetPassword(
-      {
-        newPassword: data.password,
-        token: new URLSearchParams(window.location.search).get('token')!,
+  const onSubmit = async (formData: z.infer<typeof resetPasswordSchema>) => {
+    const data = {
+      token: token || undefined,
+      newPassword: formData.password,
+    };
+
+    const fetchOptions = {
+      onResponse: () => {
+        setSubmitting(false);
       },
-      {
-        onResponse: () => {
-          setSubmitting(false);
-        },
-        onRequest: () => {
-          setSubmitting(true);
-        },
-        onSuccess: () => {
-          toast.success('Password reset successfully');
-          router.push(SIGN_IN_URL);
-        },
-        onError: (ctx) => {
-          toast.error(ctx.error.message ?? 'An error occurred, please try again.');
-        },
-      }
-    );
+      onRequest: () => {
+        setSubmitting(true);
+      },
+      onSuccess: () => {
+        toast.success('Password reset successfully');
+        router.push(SIGN_IN_URL);
+      },
+      onError: (ctx: ErrorContext) => {
+        toast.error(ctx.error.message ?? 'An error occurred, please try again.');
+      },
+    };
+
+    await authClient.resetPassword(data, fetchOptions);
   };
 
   if (!token) {
