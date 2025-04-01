@@ -8,7 +8,7 @@ import { Session, SessionDetails } from '@/lib/types';
 
 /**
  * ----------------------------------------------------------------------------
- * Get user session
+ * Return user session
  *
  * @returns {Promise<Session | null>}
  * ----------------------------------------------------------------------------

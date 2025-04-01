@@ -8,7 +8,7 @@ import { getUserSession } from './session';
 
 /**
  * ----------------------------------------------------------------------------
- * Get user details from session
+ * Return user details from session
  * ----------------------------------------------------------------------------
  */
 export const getUser = cache(async () => {
@@ -38,7 +38,7 @@ export const getUser = cache(async () => {
 
 /**
  * ----------------------------------------------------------------------------
- * Get user details from session or redirect to ACCESS_DENIED_URL
+ * Return user details from session or redirect to ACCESS_DENIED_URL
  * if user is not found
  * ----------------------------------------------------------------------------
  */
@@ -54,7 +54,7 @@ export const requireUser = cache(async () => {
 
 /**
  * ----------------------------------------------------------------------------
- * Get admin user details from session or redirect to ACCESS_DENIED_URL
+ * Return user details from session or redirect to ACCESS_DENIED_URL
  * if user is not found or user is not admin
  * ----------------------------------------------------------------------------
  */
