@@ -1,30 +1,32 @@
 import 'server-only';
 import { cache } from 'react';
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { auth } from '@/lib/auth';
 import { ACCESS_DENIED_URL } from '@/lib/constants';
 import { userRoleEnum, userSchema } from '@/lib/definitions';
-import { Session, SessionDetails } from '@/lib/types';
+import { User } from '@/lib/types';
+import { getUserSession } from './session';
 
+/**
+ * ----------------------------------------------------------------------------
+ * Get user details from session
+ * ----------------------------------------------------------------------------
+ */
 export const getUser = cache(async () => {
-  const session: Session | null = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getUserSession();
 
-  if (!session) {
+  if (!session || !session.user || !session.session) {
     return null;
   }
 
-  const { user, session: userSession } = session;
+  const { user: userData, session: sessionData } = session;
 
   const result = userSchema.safeParse({
-    name: user.name,
-    email: user.email,
-    emailVerified: user.emailVerified,
-    image: user.image,
-    role: user.role,
-    sessionId: userSession.id,
+    name: userData.name,
+    email: userData.email,
+    emailVerified: userData.emailVerified,
+    image: userData.image,
+    role: userData.role,
+    sessionId: sessionData.id,
   });
 
   if (!result.success) {
@@ -34,18 +36,12 @@ export const getUser = cache(async () => {
   return result.data;
 });
 
-export const getUserSessions = cache(async () => {
-  const sessions: SessionDetails[] | null = await auth.api.listSessions({
-    headers: await headers(),
-  });
-
-  if (!sessions) {
-    return null;
-  }
-
-  return sessions;
-});
-
+/**
+ * ----------------------------------------------------------------------------
+ * Get user details from session or redirect to ACCESS_DENIED_URL
+ * if user is not found
+ * ----------------------------------------------------------------------------
+ */
 export const requireUser = cache(async () => {
   const user = await getUser();
 
@@ -56,8 +52,14 @@ export const requireUser = cache(async () => {
   return user;
 });
 
+/**
+ * ----------------------------------------------------------------------------
+ * Get admin user details from session or redirect to ACCESS_DENIED_URL
+ * if user is not found or user is not admin
+ * ----------------------------------------------------------------------------
+ */
 export const requireAdmin = cache(async () => {
-  const user = await getUser();
+  const user: User | null = await getUser();
 
   if (!user || user.role !== userRoleEnum.enum.admin) {
     redirect(ACCESS_DENIED_URL);
