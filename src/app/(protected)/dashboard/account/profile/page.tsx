@@ -4,6 +4,8 @@ import { UserProfile } from './_components/user-profile';
 import { UserSessions } from './_components/user-sessions';
 import { UserSettings } from './_components/user-settings';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProfilePage() {
   const user = await requireUser();
   const sessions = await requireUserSessions();
