@@ -145,7 +145,7 @@ export function EditProfileForm() {
                             <Input
                               ref={fileInputRef}
                               type="file"
-                              accept="image/jpeg,image/jpg,image/png,image/webp"
+                              accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
                               onChange={(e) => {
                                 const file = e.target.files?.[0] ?? null;
                                 onChange(file);
