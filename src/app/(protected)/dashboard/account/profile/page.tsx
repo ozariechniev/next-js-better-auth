@@ -1,17 +1,12 @@
-import { redirect } from 'next/navigation';
-import { getUser, getUserSessions } from '@/data/user';
-import { ACCESS_DENIED_URL } from '@/lib/constants';
+import { requireUserSessions } from '@/data/session';
+import { requireUser } from '@/data/user';
 import { UserProfile } from './_components/user-profile';
 import { UserSessions } from './_components/user-sessions';
 import { UserSettings } from './_components/user-settings';
 
-export default async function AccountPage() {
-  const user = await getUser();
-  const sessions = await getUserSessions();
-
-  if (!user || !sessions) {
-    redirect(ACCESS_DENIED_URL);
-  }
+export default async function ProfilePage() {
+  const user = await requireUser();
+  const sessions = await requireUserSessions();
 
   return (
     <div className="p-4 lg:p-6">
