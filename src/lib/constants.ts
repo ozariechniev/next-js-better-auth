@@ -27,3 +27,6 @@ export const AUTH_NAV_LINKS = [
 ] as const;
 
 export const USER_ROLE = ['user', 'admin'] as const;
+
+export const EDIT_PROFILE_MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+export const EDIT_PROFILE_ACCEPTED_FILE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/webp'];

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { USER_ROLE } from './constants';
+import { EDIT_PROFILE_ACCEPTED_FILE_TYPES, EDIT_PROFILE_MAX_FILE_SIZE, USER_ROLE } from './constants';
 
 const getNameSchema = () =>
   z.string().min(1, { message: 'Name is required' }).max(50, { message: 'Name must be less than 50 characters' });
@@ -70,17 +70,27 @@ export const resetPasswordSchema = z
 
 /**
  * ----------------------------------------------------------------------------
- * Auth: Edit Profile Schema
+ * Profile: Edit Profile Schema
  * ----------------------------------------------------------------------------
  */
 
 export const editProfileSchema = z.object({
-  name: getNameSchema(),
+  name: z.string().max(50, { message: 'Name must be less than 50 characters' }).optional(),
+  image: z
+    .custom<File>()
+    .refine((file) => !file || file instanceof File, 'Must be a valid file')
+    .refine((file) => !file || file.size <= EDIT_PROFILE_MAX_FILE_SIZE, 'File size must be less than 2MB')
+    .refine(
+      (file) => !file || EDIT_PROFILE_ACCEPTED_FILE_TYPES.includes(file.type),
+      'Only .jpg, .jpeg, .png, .gif and .webp files are accepted'
+    )
+    .transform((file) => (!file ? null : file))
+    .optional(),
 });
 
 /**
  * ----------------------------------------------------------------------------
- * Auth: Change Profile Password Schema
+ * Profile: Change Profile Password Schema
  * ----------------------------------------------------------------------------
  */
 
@@ -98,7 +108,7 @@ export const changePasswordSchema = z
 
 /**
  * ----------------------------------------------------------------------------
- * User Schema
+ * Dashboard: User Schema
  * ----------------------------------------------------------------------------
  */
 
