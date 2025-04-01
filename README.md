@@ -169,7 +169,7 @@ Email service configuration might need to be updated for other providers
   - [x] Active sessions
   - [x] Personal information
   - [x] Settings
-    - [ ] Edit information
+    - [x] Edit information
     - [x] Change password
     - [ ] Delete profile
 
