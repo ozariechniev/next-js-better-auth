@@ -11,7 +11,7 @@
   - [⚙️  Other platforms](#️--other-platforms)
     - [Database](#database)
     - [Email Service](#email-service)
-  - [Roadmap](#roadmap)
+  - [Authentication](#authentication)
   - [User Management](#user-management)
   - [🤝  Contributing](#--contributing)
 <!-- TOC -->
@@ -155,7 +155,7 @@ Email service configuration might need to be updated for other providers
 
 ---
 
-### Roadmap
+### Authentication
 
 - [x] Email & Password authentication
   - [x] Sign-in
