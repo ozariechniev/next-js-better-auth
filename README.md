@@ -171,7 +171,7 @@ Email service configuration might need to be updated for other providers
   - [x] Settings
     - [x] Edit information
     - [x] Change password
-    - [ ] Delete profile
+    - [x] Delete profile
 
 ---
 
