@@ -45,13 +45,13 @@ export function Features() {
         </div>
         <div className="mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16 @min-4xl:max-w-full @min-4xl:grid-cols-3">
           {data.map(({ title, description, icon }) => (
-            <Card key={title} className="group shadow-zinc-950/5">
+            <Card key={title} className="group gap-4 shadow-zinc-950/5">
               <CardHeader className="pb-3">
                 <CardDecorator>{icon}</CardDecorator>
-                <h3 className="mt-6 font-medium">{title}</h3>
+                <h3 className="mt-6 font-semibold">{title}</h3>
               </CardHeader>
               <CardContent>
-                <p className="mt-3 text-sm">{description}</p>
+                <p className="mb-3 text-sm">{description}</p>
               </CardContent>
             </Card>
           ))}

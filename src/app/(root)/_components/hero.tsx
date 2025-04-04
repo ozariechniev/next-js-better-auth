@@ -7,8 +7,8 @@ export function Hero() {
     <section className="relative overflow-hidden bg-white/50 py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="dark:bg-muted inline-flex items-center rounded-lg bg-blue-100 px-3 py-1 text-sm">
+          <div className="flex flex-col justify-center space-y-8">
+            <div className="dark:bg-muted inline-flex max-w-60 items-center rounded-lg bg-blue-100 px-3 py-1 text-sm">
               <ShieldCheck className="mr-1 h-4 w-4 text-blue-600 dark:text-blue-400" />
               <span className="text-blue-700 dark:text-blue-300">Secure Authentication System</span>
             </div>
