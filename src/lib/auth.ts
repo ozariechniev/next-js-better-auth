@@ -1,7 +1,8 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
-import { admin, openAPI } from 'better-auth/plugins';
+import { admin } from 'better-auth/plugins';
+import { deleteAccountEmailHTML } from '@/app/(auth)/_components/email/delete-account-email';
 import { resetPasswordEmailHTML } from '@/app/(auth)/_components/email/reset-password-email';
 import { signUpEmailHTML } from '@/app/(auth)/_components/email/sign-up-email';
 import { db } from '@/db/drizzle';
@@ -47,5 +48,19 @@ export const auth = betterAuth({
       });
     },
   },
-  plugins: [admin(), openAPI(), nextCookies()],
+  user: {
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async ({ user, url }) => {
+        const emailHTML = await deleteAccountEmailHTML({ url, userName: user.name });
+
+        await sendEmail({
+          to: user.email,
+          subject: 'Delete your account',
+          html: emailHTML,
+        });
+      },
+    },
+  },
+  plugins: [admin(), nextCookies()],
 });
