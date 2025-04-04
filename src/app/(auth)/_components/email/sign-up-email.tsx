@@ -46,6 +46,6 @@ export function SignUpEmail({ url }: SignUpEmailProps) {
   );
 }
 
-export async function signUpEmailHTML({ url }: SignUpEmailProps) {
-  return await render(<SignUpEmail url={url} />);
+export async function signUpEmailHTML(props: SignUpEmailProps) {
+  return await render(<SignUpEmail {...props} />);
 }
